@@ -1,25 +1,7 @@
 import os
 from pyrogram import Client, filters
-from flask import Flask
-from threading import Thread
 
-# Web Service Render'da o'chib qolmasligi uchun kichik veb-server
-web_app = Flask('')
-
-@web_app.route('/')
-def home():
-    return "Bot faol ishlayapti!"
-
-def run_web():
-    port = int(os.environ.get("PORT", 8080))
-    web_app.run(host='0.0.0.0', port=port)
-
-def keep_alive():
-    t = Thread(target=run_web)
-    t.daemon = True
-    t.start()
-
-# Render muhit o'zgaruvchilarini o'qish
+# Render muhit o'zgaruvchilarini olish
 API_ID = int(os.getenv("API_ID", "0"))
 API_HASH = os.getenv("API_HASH", "")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
@@ -65,8 +47,5 @@ async def download_media(client, message):
     else:
         await message.reply("⚠️ Iltimos, faqat yopiq kanaldagi post havolasini yuboring (masalan: https://t.me/c/...)")
 
-if __name__ == "__main__":
-    keep_alive()  # Veb-serverni fonda ishga tushiramiz
-    print("Bot ishga tushdi...")
-    app.run()
-    
+print("Bot ishga tushdi...")
+app.run()
